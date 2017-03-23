@@ -34,5 +34,9 @@
   "Role": {
     "dataSource": "database",
     "public": false
+  },
+  "Place": {
+    "dataSource": "database",
+    "public": true
   }
 }
