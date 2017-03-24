@@ -4,6 +4,20 @@ var loopback = require('loopback');
 
 module.exports = function(Place) {
 
+  /**
+  * Set active default false on create
+  */
+  Place.observe('before save', function filterProperties(ctx, next) {
+    ctx.instance.active = false;
+    next();
+  });
+
+  /**
+  * Remote method explore
+  * To find places nearby
+  * @param lat
+  * @param lng
+  */
   Place.explore = function(lat, lng, cb) {
     // instance GeoPoint here based lat and lng
     var here = new loopback.GeoPoint({
@@ -11,14 +25,15 @@ module.exports = function(Place) {
       lng: lng
     });
 
-    // find on venues based here
+    // find on places based here
     Place.find({
       where: {
         location: {
           near: here,
           maxDistance: 600,
           unit: 'meters'
-        }
+        },
+        active: true,
       },
       limit: 20
     }, function(err, results) {
@@ -26,29 +41,29 @@ module.exports = function(Place) {
         cb(err, null);
       }
       else if(results) {
-        // instance venues list
-        var venues = [];
+        // instance places list
+        var places = [];
 
-        // loop venues
-        results.forEach(function(venue) {
+        // loop places
+        results.forEach(function(place) {
 
           // calcule distance in meters
           var distance = loopback.GeoPoint.distanceBetween(here,
-            venue.location,
+            place.location,
             {
               type: 'meters'
             }
           );
 
           // set distance
-          venue.distance = distance.toFixed(2);
+          place.distance = distance.toFixed(2);
 
-          // added venue to venues
-          venues.push(venue);
+          // added place to places
+          places.push(place);
         });
 
         // output
-        cb(null, venues);
+        cb(null, places);
 
       }
       else {
