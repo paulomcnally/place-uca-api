@@ -38,5 +38,9 @@
   "Place": {
     "dataSource": "database",
     "public": true
+  },
+  "PlaceType": {
+    "dataSource": "database",
+    "public": true
   }
 }

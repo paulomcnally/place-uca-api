@@ -1,6 +1,6 @@
 {
-  "name": "Place",
-  "plural": "Places",
+  "name": "PlaceType",
+  "plural": "PlaceTypes",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -11,39 +11,19 @@
       "type": "string",
       "required": true
     },
-    "location": {
-      "type": "geopoint",
+    "icon": {
+      "type": "string",
       "required": true
-    },
-    "placeTypeId": {
-      "type": "number",
-      "required": true
-    },
-    "active": {
-      "type": "boolean"
     }
   },
   "validations": [],
-  "relations": {
-    "placeType": {
-      "type": "belongsTo",
-      "model": "PlaceType",
-      "foreignKey": "placeTypeId"
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
-    },
-    {
-      "accessType": "EXECUTE",
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "explore"
     },
     {
       "accessType": "*",
