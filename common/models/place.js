@@ -1,5 +1,7 @@
 'use strict';
 
+var loopback = require('loopback');
+
 module.exports = function(Place) {
 
   Place.explore = function(lat, lng, cb) {
